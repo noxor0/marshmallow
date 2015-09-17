@@ -82,13 +82,14 @@ public class Menu extends MouseAdapter {
 			}		
 		}
 		if(game.gameState == STATE.Store){ // 'Base up button'
-			//TODO: Increase cost a lot
 			if(mouseOver(mx, my,halfW - 100, 400, 200, 64)){
-				if(hud.getMoney() >= 1000){
-					hud.spendMoney(1000);
-					hud.addMaxHp(650);
-					hud.addHp(650);
-					Player.addPlayerLevel();
+				if(Player.PlayerLevel < 3){
+					if(hud.getMoney() >= 1000){
+						hud.spendMoney(1000);
+						hud.addMaxHp(650);
+						hud.addHp(650);
+						Player.addPlayerLevel();
+					}	
 				}
 			}			
 		}

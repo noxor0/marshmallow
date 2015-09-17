@@ -4,9 +4,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
-//import java.awt.image.BufferedImage;
-//import java.io.File;
-//import javax.imageio.ImageIO;
 
 public class BasicEnemy extends GameObject {
 
@@ -15,9 +12,9 @@ public class BasicEnemy extends GameObject {
 	
 	private int oriX = Game.WIDTH / 2;
 	private int oriY = Game.HEIGHT / 2; 
-//	private BufferedImage img = null;
+	private int size = 16;
 	
-	
+	//remove switch case? make different constructors? 
 	public BasicEnemy(int x, int y, ID id, Handler handler) {
 		super(x, y, id);
 		this.handler = handler;
@@ -44,7 +41,7 @@ public class BasicEnemy extends GameObject {
 	public void tick(){
 		x += velX;
 		y += velY;
-		handler.addObject(new Trail((int)x, (int)y, ID.Particle, Color.red, 16, 16, 0.05f, handler));
+		handler.addObject(new Trail((int)x, (int)y, ID.Particle, Color.red, size, size, 0.05f, handler));
 		if(hp <= 0){
 			handler.objectList.remove(this);
 		}
@@ -52,14 +49,8 @@ public class BasicEnemy extends GameObject {
 	
 	
 	public void render(Graphics g){
-//		try{
-//			img = ImageIO.read(getClass().getResourceAsStream("models/enemy.png"));
-//			img = ImageIO.read(new File("/home/noxor/workspace/marshmallow/src/marshmallow/models/enemy.png"));
-//			g.drawImage(img, (int)x, (int)y, 16, 16, null);
-//		}catch(Exception e){
 			g.setColor(Color.red);
-			g.fillRect((int)x, (int)y, 16, 16);			
-//		}
+			g.fillRect((int)x, (int)y, size, size);			
 	}
 	
 	public Rectangle getBounds(){

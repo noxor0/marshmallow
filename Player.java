@@ -10,13 +10,15 @@ import javax.imageio.ImageIO;
 
 public class Player extends GameObject { //tester
 	
-	private boolean ffPresent = false;
+	private boolean ffPresent = true;
 
-	Handler handler;
+	private Handler handler;
+//	private ForceField ff = new ForceField(Game.WIDTH/2-32, Game.HEIGHT/2-32, ID.ForceField);
+	
 	public static int PlayerLevel = 1;
 	private BufferedImage img = null;
 	
-	public Player(int x, int y, ID id, Handler handler) {
+	public Player(int x, int y, ID id, Handler handler){
 		super(x, y, id);
 		this.handler = handler;
 	}
@@ -29,8 +31,11 @@ public class Player extends GameObject { //tester
 		collision();
 	}
 	
-	public void render(Graphics g){ //force field render boolean
+	public void render(Graphics g){
 		drawBase(g);
+//		if(ffPresent == true){
+//			ff.render(g);
+//		}
 		
 //		Graphics2D g2d = (Graphics2D) g;
 //		g2d.setColor(Color.PINK);
@@ -43,29 +48,28 @@ public class Player extends GameObject { //tester
 			if(tempObject.getId() == ID.BasicEnemy){
 				if(getBounds().intersects(tempObject.getBounds())){
 					HUD.Health -= 8;
-					tempObject.hp -= 8;
+					tempObject.hp =- 8;
 				}
 			}
 			if(tempObject.getId() == ID.FastEnemy){
 				if(getBounds().intersects(tempObject.getBounds())){
 					HUD.Health -= 12;
-					tempObject.hp -= 5;				
+					tempObject.hp =- 5;				
 				}
 			}
 			if(tempObject.getId() == ID.Rocket){
 				if(getBounds().intersects(tempObject.getBounds())){
 					HUD.Health -= 22;
-					tempObject.hp -= 1;		
+					tempObject.hp =- 1;		
 				}
 			}
 		}
 	}
 	
-
-	
 	public static void addPlayerLevel(){
 		PlayerLevel++;
 	}
+	
 	public void drawBase(Graphics g){
 		switch(PlayerLevel){
 		case 1: try{
@@ -74,15 +78,24 @@ public class Player extends GameObject { //tester
 				}catch(Exception e){
 					g.setColor(new Color(0, 153, 0));
 					g.fillOval((int)x, (int)y, 64, 64);
-					g.setColor(Color.green);
 				}
 				break;
-		case 2: g.setColor(Color.gray);
-				g.fillOval((int)x, (int)y, 64, 64);
+		case 2: try{
+					img = ImageIO.read(getClass().getResourceAsStream("models/baseTwo.png"));
+					g.drawImage(img, (int)x, (int)y, 64, 64, null);
+				}catch(Exception e){
+					g.setColor(Color.gray);
+					g.fillOval((int)x, (int)y, 64, 64);
+				}
 				break;
-		case 3: g.setColor(Color.pink);
-				g.fillOval((int)x, (int)y, 64, 64);
-				break;
+		case 3: try{
+					img = ImageIO.read(getClass().getResourceAsStream("models/baseThree.png"));
+					g.drawImage(img, (int)x, (int)y, 64, 64, null);
+				}catch(Exception e){
+					g.setColor(Color.pink);
+					g.fillOval((int)x, (int)y, 64, 64);
+					break;
+				}
 		}	
 	}
 

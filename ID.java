@@ -4,11 +4,10 @@ package marshmallow;
 public enum ID {
 
 	Player(),
-	HP(),
 	Particle(),
+	ForceField(),
 	BasicEnemy(), 
 	RocketEnemy(),
 	FastEnemy(),
 	Rocket();
-	
 }

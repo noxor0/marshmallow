@@ -12,6 +12,7 @@ public class RocketEnemy extends GameObject {
 	
 	private int oriX = Game.WIDTH / 2;
 	private int oriY = Game.HEIGHT / 2; 
+	private int size = 20;
 	private int count = 0;
 	private int rocketCount = 0;
 	private boolean isStopped = false;
@@ -31,7 +32,7 @@ public class RocketEnemy extends GameObject {
 			y += velY;
 			isStopped = true;
 		}
-		handler.addObject(new Trail((int)x, (int)y, ID.Particle, Color.cyan, 20, 20, 0.05f, handler));
+		handler.addObject(new Trail((int)x, (int)y, ID.Particle, Color.cyan, size, size, 0.06f, handler));
 		if(hp <= 0){
 			handler.objectList.remove(this);
 		}
@@ -47,11 +48,11 @@ public class RocketEnemy extends GameObject {
 	
 	public void render(Graphics g){
 		g.setColor(Color.cyan);
-		g.fillRect((int)x, (int)y, 20, 20);
+		g.fillRect((int)x, (int)y, size, size);
 	}
 	
 	public Rectangle getBounds(){
-		return new Rectangle((int)x,(int) y, 16, 16);
+		return new Rectangle((int)x,(int) y, size, size);
 	}
 
 }

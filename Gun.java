@@ -19,53 +19,38 @@ public class Gun extends MouseAdapter{
 	}
 	
 	public void mousePressed(MouseEvent e){
-		//TODO: Level up gun, do more dmg
 		int mx = e.getX();
 		int my = e.getY();
 		
 		if(game.gameState == STATE.Game){
 			for(int i = 0; i < handler.objectList.size(); i++){
 				GameObject tempObject = handler.objectList.get(i);
-				//TODO: Can I make this shorter?
-				if(tempObject.id == ID.BasicEnemy){
-					if(mouseOver(mx, my, (int)tempObject.x-5, (int)tempObject.y-5, 30, 30)){
-						tempObject.removeHp(5);
-						handler.addObject(new Explosion(mx, my, ID.Particle, Explosion.boom(), 14, 14, 0.04f, handler));
-						if(tempObject.getHp()<=0){
-							hud.addMoney(5);
-						}
-					}	
+				shoot(tempObject, mx, my);		
+			}
+		}
+	}
+	
+	public void shoot(GameObject tempObject, int mx, int my){
+		ID id = tempObject.getId();
+		if(id!= ID.Player && id!= ID.Particle && id!=ID.Rocket){
+			if(mouseOver(mx, my, (int)tempObject.x-5, (int)tempObject.y-5, 30, 30)){
+				tempObject.removeHp(5);
+				handler.addObject(new Explosion(mx-7, my-7, ID.Particle, Explosion.boom(), 14, 14, 0.04f, handler));
+				if(tempObject.getHp()<=0){
+					if(id == ID.BasicEnemy)hud.addMoney(5);
+					if(id == ID.FastEnemy) hud.addMoney(10);
+					if(id == ID.RocketEnemy) hud.addMoney(30);
 				}
-				if(tempObject.id == ID.RocketEnemy){
-					if(mouseOver(mx, my, (int)tempObject.x-5, (int)tempObject.y-5, 30, 30)){
-						tempObject.removeHp(5);
-						handler.addObject(new Explosion(mx, my, ID.Particle, Explosion.boom(), 14, 14, 0.04f, handler));
-						if(tempObject.getHp()<=0){
-							hud.addMoney(30);
-						}
-					}	
-				}
-				if(tempObject.id == ID.FastEnemy){
-					if(mouseOver(mx, my, (int)tempObject.x-5, (int)tempObject.y-5, 30, 30)){
-						tempObject.removeHp(5);
-						handler.addObject(new Explosion(mx, my, ID.Particle, Explosion.boom(), 14, 14, 0.04f, handler));
-						if(tempObject.getHp()<=0){
-							hud.addMoney(10);
-						}
-					}	
-				}
-				
-				
 			}
 		}
 	}
 	
 	public void tick(){
 		//add animation for guns shooting?
+		//fixers are in HUD
 		int gunCount = hud.getGun();
 		count += gunCount;
 		if(count >= 700){ 
-			//TODO: balance this shit
 			count = 0;
 			for(int i = 0; i < handler.objectList.size(); i++){
 				if(handler.objectList.get(i).id == ID.BasicEnemy){
@@ -77,13 +62,18 @@ public class Gun extends MouseAdapter{
 				}if(handler.objectList.get(i).id == ID.RocketEnemy){
 					handler.objectList.get(i).removeHp(10);
 					if(handler.objectList.get(i).hp <= 0){
-						hud.addMoney(20);
+						hud.addMoney(22);
+					}
+					return;
+				}if(handler.objectList.get(i).id == ID.FastEnemy){
+					handler.objectList.get(i).removeHp(10);
+					if(handler.objectList.get(i).hp <= 0){
+						hud.addMoney(8);
 					}
 					return;
 				}
 			}	
 		}
-		//fixers are in HUD
 	}
 	
 	public void render(Graphics g){

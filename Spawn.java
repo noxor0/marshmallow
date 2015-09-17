@@ -10,8 +10,8 @@ public class Spawn {
 	private int scoreKeep = 600;
 	private int prevKeep = 600;
 	private int waveKeep = 0;
-	private int spawnChanceRE= 11;
-	private int spawnChanceFE= 11;
+	private int spawnChanceFE= 15;
+	private int spawnChanceRE= 25;
 	private boolean spawnDecFE = false;
 	private boolean spawnDecRE = false;
 
@@ -31,28 +31,32 @@ public class Spawn {
 		waveKeep++;
 		if(waveKeep >= 3100){
 			game.gameState = STATE.Store;
-			spawnDecRE = false; spawnDecFE = false;
 			hud.addLevel(1);
 			waveKeep = 0;
+			spawnDecRE = false; spawnDecFE = false;
 		}
-		if(hud.getLevel() > 4){
-			if(spawnDecFE == false){
-				if(spawnChanceFE >= 3){
-					spawnChanceFE--;
-					System.out.println("decFE");
+		if(spawnDecFE == false && hud.getLevel() > 3 ){
+				int minusFE = hud.getLevel() - 3;
+				if (minusFE < 5){
+					spawnChanceFE -= minusFE;
+					spawnDecFE = true;					
+				}if(minusFE > 5){
+					spawnChanceFE -= 5;
 					spawnDecFE = true;
-				}				
-			}
+				}
 		}
-		if(hud.getLevel() > 7){
-			if(spawnDecRE == false){
-				if(spawnChanceRE >= 5){
-					spawnChanceRE--;
-					System.out.println("decRE");
-					spawnDecRE = true;
-				}				
+		if(spawnDecRE == false && hud.getLevel() > 7 ){
+			int minusRE = hud.getLevel() - 7;
+			if (minusRE < 5){
+				spawnChanceRE -= minusRE;
+				System.out.println("aoeu");
+				spawnDecRE = true;					
+			}if(minusRE > 5){
+				System.out.println("1234");
+				spawnChanceRE -= 5;
+				spawnDecRE = true;
 			}
-		}
+		}	
 	}
 	
 	public void spawnMultiple(){
@@ -95,29 +99,32 @@ public class Spawn {
 		}
 	}
 	public void spawnR(){
-		if(handler.objectList.size()<300){
+		if(handler.objectList.size()<400){
+			
 			handler.addObject(new BasicEnemy(Game.WIDTH, r.nextInt(Game.HEIGHT), ID.BasicEnemy, handler));
-			if(r.nextInt(spawnChanceFE) <= 2){
+			if(r.nextInt(spawnChanceFE) <= 5){
 				if(hud.getLevel() >= 4){
 					handler.addObject(new FastEnemy(Game.WIDTH, r.nextInt(Game.HEIGHT), ID.FastEnemy,handler));
 				}
 			}
-			if(r.nextInt(spawnChanceRE) <= 3){
-				if(hud.getLevel() >= 7){
+			if(r.nextInt(spawnChanceRE) == 3){
+					if(hud.getLevel() >= 7){
 					handler.addObject(new RocketEnemy(Game.WIDTH, r.nextInt(Game.HEIGHT), ID.RocketEnemy,handler));
 				}
 			}
-		}
+			
+		}		spawnChanceRE = 11;
+		spawnChanceFE = 11;
 	}
 	public void spawnL(){
-		if(handler.objectList.size()<300){
+		if(handler.objectList.size()<400){
 			handler.addObject(new BasicEnemy(0, r.nextInt(Game.HEIGHT), ID.BasicEnemy,handler));
-			if(r.nextInt(spawnChanceFE) <= 2){
+			if(r.nextInt(spawnChanceFE) <= 5){
 				if(hud.getLevel() >= 4){
 					handler.addObject(new FastEnemy(0, r.nextInt(Game.HEIGHT), ID.FastEnemy,handler));
 				}
 			}
-			if(r.nextInt(spawnChanceRE) <= 3){ 
+			if(r.nextInt(spawnChanceRE) == 3){ 
 				if(hud.getLevel() >= 7){
 					handler.addObject(new RocketEnemy(0, r.nextInt(Game.HEIGHT), ID.RocketEnemy,handler));
 				}
@@ -125,14 +132,14 @@ public class Spawn {
 		}
 	}
 	public void spawnU(){
-		if(handler.objectList.size()<300){
+		if(handler.objectList.size()<400){
 			handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), 0, ID.BasicEnemy, handler));
-			if(r.nextInt(spawnChanceFE) <= 2){
+			if(r.nextInt(spawnChanceFE) <= 5){
 				if(hud.getLevel() >= 4){
 					handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), 0, ID.FastEnemy,handler));
 				}
 			}
-			if(r.nextInt(spawnChanceRE) <= 3){
+			if(r.nextInt(spawnChanceRE) == 3){
 				if(hud.getLevel() >= 7){
 					handler.addObject(new RocketEnemy(r.nextInt(Game.WIDTH), 0, ID.RocketEnemy,handler));
 				}
@@ -140,14 +147,14 @@ public class Spawn {
 		}
 	}
 	public void spawnD(){
-		if(handler.objectList.size()<300){
+		if(handler.objectList.size()<400){
 			handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), Game.HEIGHT, ID.BasicEnemy,handler));
 			if(r.nextInt(spawnChanceFE) <= 2){
 				if(hud.getLevel() >= 4){
 					handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH), Game.HEIGHT, ID.FastEnemy,handler));
 				}
 			}
-			if(r.nextInt(spawnChanceRE) <= 3){
+			if(r.nextInt(spawnChanceRE) == 3){
 				if(hud.getLevel() >= 7){
 					handler.addObject(new RocketEnemy(r.nextInt(Game.WIDTH),Game.HEIGHT, ID.RocketEnemy,handler));
 				}
@@ -157,7 +164,5 @@ public class Spawn {
 	public void reset(){
 		scoreKeep = 400;
 		waveKeep = 0;
-		spawnChanceRE = 11;
-		spawnChanceFE = 11;
 	}
 }
