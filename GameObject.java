@@ -17,14 +17,15 @@ public abstract class GameObject {
 		this.y = y;
 		this.id = id;
 		if(id == ID.BasicEnemy) hp = 10;
-		if(id == ID.RocketEnemy) hp = 30;
+		if(id == ID.RocketEnemy) hp = 25;
 		if(id == ID.Rocket) hp = 1;
+		if(id == ID.FastEnemy) hp = 5;
 	}
 	
 	public abstract void tick();
 	public abstract void render(Graphics g); 
 	public abstract Rectangle getBounds(); 
-
+	
 	public float getX() {
 		return x;
 	}

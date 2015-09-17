@@ -4,14 +4,9 @@ package marshmallow;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
-//handles objects created
-//loops through, updates and renders them
-//TODO: Is it even possible to have an 'enemy-only' or 'player-only' Linked list?
-public class Handler { 
-	
+public class Handler { 	
 	LinkedList<GameObject> objectList = new LinkedList<GameObject>();
 
-	
 	public void tick(){
 		for(int i = 0; i < objectList.size(); i++){
 			GameObject tempObject = objectList.get(i);

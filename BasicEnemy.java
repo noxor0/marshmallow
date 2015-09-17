@@ -1,8 +1,12 @@
 package marshmallow;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
+//import java.awt.image.BufferedImage;
+//import java.io.File;
+//import javax.imageio.ImageIO;
 
 public class BasicEnemy extends GameObject {
 
@@ -11,6 +15,8 @@ public class BasicEnemy extends GameObject {
 	
 	private int oriX = Game.WIDTH / 2;
 	private int oriY = Game.HEIGHT / 2; 
+//	private BufferedImage img = null;
+	
 	
 	public BasicEnemy(int x, int y, ID id, Handler handler) {
 		super(x, y, id);
@@ -46,8 +52,14 @@ public class BasicEnemy extends GameObject {
 	
 	
 	public void render(Graphics g){
-		g.setColor(Color.red);
-		g.fillRect((int)x, (int)y, 16, 16);
+//		try{
+//			img = ImageIO.read(getClass().getResourceAsStream("models/enemy.png"));
+//			img = ImageIO.read(new File("/home/noxor/workspace/marshmallow/src/marshmallow/models/enemy.png"));
+//			g.drawImage(img, (int)x, (int)y, 16, 16, null);
+//		}catch(Exception e){
+			g.setColor(Color.red);
+			g.fillRect((int)x, (int)y, 16, 16);			
+//		}
 	}
 	
 	public Rectangle getBounds(){
@@ -55,6 +67,3 @@ public class BasicEnemy extends GameObject {
 	}
 
 }
-
-//		if(y <= 0||y >= Game.HEIGHT - 32) velY *= -1;
-//		if(x <= 0||x >= Game.WIDTH - 16) velX *= -1;

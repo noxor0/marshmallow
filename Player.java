@@ -2,14 +2,15 @@ package marshmallow;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import javax.imageio.ImageIO;
 
+//import java.awt.Graphics2D;
+
 public class Player extends GameObject { //tester
+	
+	private boolean ffPresent = false;
 
 	Handler handler;
 	public static int PlayerLevel = 1;
@@ -22,57 +23,60 @@ public class Player extends GameObject { //tester
 
 	public Rectangle getBounds(){
 		return new Rectangle((int)x+7, (int)y+7, 50, 50);
-		//TODO: Add more hit boxes
 	}
 	
 	public void tick() {
 		collision();
 	}
 	
-	public void render(Graphics g) {		
+	public void render(Graphics g){ //force field render boolean
 		drawBase(g);
+		
+//		Graphics2D g2d = (Graphics2D) g;
+//		g2d.setColor(Color.PINK);
+//		g2d.draw(getBounds());
 	}
 	
-	//TODO: Add enemy/player interactions
 	private void collision(){
 		for(int i = 0; i < handler.objectList.size(); i++){
 			GameObject tempObject = handler.objectList.get(i);
 			if(tempObject.getId() == ID.BasicEnemy){
-				//add how different enemies damage base
 				if(getBounds().intersects(tempObject.getBounds())){
-					HUD.Health -= 10;
-					tempObject.hp =-10;
+					HUD.Health -= 8;
+					tempObject.hp -= 8;
+				}
+			}
+			if(tempObject.getId() == ID.FastEnemy){
+				if(getBounds().intersects(tempObject.getBounds())){
+					HUD.Health -= 12;
+					tempObject.hp -= 5;				
 				}
 			}
 			if(tempObject.getId() == ID.Rocket){
 				if(getBounds().intersects(tempObject.getBounds())){
-					HUD.Health -= 25;
-					tempObject.hp =- 1;
-//					handler.objectList.remove(i);					
+					HUD.Health -= 22;
+					tempObject.hp -= 1;		
 				}
 			}
 		}
 	}
 	
+
+	
 	public static void addPlayerLevel(){
 		PlayerLevel++;
 	}
 	public void drawBase(Graphics g){
-		
-		
 		switch(PlayerLevel){
 		case 1: try{
-					img = ImageIO.read(new File("/home/noxor/workspace/marshmallow/"
-							+ "src/marshmallow/models//playBase1.png"));
+					img = ImageIO.read(getClass().getResourceAsStream("models/baseOne.png"));
 					g.drawImage(img, (int)x, (int)y, 64, 64, null);
-				}catch(IOException e){
-					System.out.println("nope, chunk testa");
+				}catch(Exception e){
+					g.setColor(new Color(0, 153, 0));
+					g.fillOval((int)x, (int)y, 64, 64);
+					g.setColor(Color.green);
 				}
 				break;
-//		case 1: g.setColor(new Color(0, 153, 0));
-//				g.fillOval((int)x, (int)y, 64, 64);
-//				g.setColor(Color.green);
-//				break;
 		case 2: g.setColor(Color.gray);
 				g.fillOval((int)x, (int)y, 64, 64);
 				break;
@@ -80,6 +84,14 @@ public class Player extends GameObject { //tester
 				g.fillOval((int)x, (int)y, 64, 64);
 				break;
 		}	
+	}
+
+	public boolean isffUp() {
+		return ffPresent;
+	}
+
+	public void ffUp(boolean ffPresent) {
+		this.ffPresent = ffPresent;
 	}
 
 }

@@ -3,27 +3,26 @@ package marshmallow;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
 //TODO: maybe give it its own section on top of screen STH style?
 //TODO: Time till end of wave?
 public class HUD {
 
-	public static int Health = 100;
-	public int maxHealth = 100;
+	public static int Health = 1000;
+	public int maxHealth = 1000;
 	public int percentHp;
 	
 	private int score = 0;
-	private int money = 29;
-	private int level = 5;
+	private int money = 0;
+	private int level = 8;
 	
-	private int gunner = 10;
-	private int fixer = 1;
+	private int gunner = 0;
+	private int fixer = 100;
 	
 	private int fixCount = 0;
 	
 	public void tick(){
 		score++;
-		//HERE ARE FIXERS, YOU BLIND SHIT
+		//HERE ARE FIXER
 		fixCount += fixer;
 		if(fixCount >= 100){
 			fixCount = 0;

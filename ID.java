@@ -8,6 +8,7 @@ public enum ID {
 	Particle(),
 	BasicEnemy(), 
 	RocketEnemy(),
+	FastEnemy(),
 	Rocket();
 	
 }

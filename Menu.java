@@ -23,6 +23,7 @@ public class Menu extends MouseAdapter {
 	public void mousePressed(MouseEvent e){
 		int mx = e.getX();
 		int my = e.getY();
+
 		//main menu
 		if(game.gameState == STATE.Menu){ // 'play button'
 			if(mouseOver(mx, my, halfW - 100, 100, 200, 64)){
@@ -69,18 +70,24 @@ public class Menu extends MouseAdapter {
 		}
 		if(game.gameState == STATE.Store){ // 'Heal button'
 			if(mouseOver(mx, my,halfW - 100, 300, 200, 64)){
-				if(hud.getMoney()>= 15 && hud.getHp() != 100){
+				if(hud.getMoney()>= 15){
+					if(hud.getHp()+20 >= hud.getMaxHp()){
+						hud.addHp(hud.getMaxHp() - hud.getHp());
+						hud.spendMoney(15);
+					}else{
+					hud.addHp(20);					
 					hud.spendMoney(15);
-					hud.addHp(20);
+					}
 				}
-			}			
-		}if(game.gameState == STATE.Store){ // 'Base up button'
+			}		
+		}
+		if(game.gameState == STATE.Store){ // 'Base up button'
 			//TODO: Increase cost a lot
 			if(mouseOver(mx, my,halfW - 100, 400, 200, 64)){
-				if(hud.getMoney() >= 200){
-					hud.spendMoney(200);
-					hud.addMaxHp(400);
-					hud.addHp(400);
+				if(hud.getMoney() >= 1000){
+					hud.spendMoney(1000);
+					hud.addMaxHp(650);
+					hud.addHp(650);
 					Player.addPlayerLevel();
 				}
 			}			
@@ -97,10 +104,11 @@ public class Menu extends MouseAdapter {
 		
 	}
 	
+	//TODO: Make pretty starting screen
 	public void render(Graphics g){
 		if(game.gameState == STATE.Menu){
 			Font fnt = new Font("arial", 1, 50);
-			Font fnt2 = new Font("arial", 1, 30);
+			Font fnt2 = new Font("arial", 1, 20);
 			
 			g.setColor(Color.white);
 			g.setFont(fnt);
@@ -119,19 +127,18 @@ public class Menu extends MouseAdapter {
 			Font fnt = new Font("arial", 1, 50);
 			Font fnt2 = new Font("arial", 1, 30);
 			
-			g.setColor(Color.white);
 			g.setFont(fnt);
+			g.setColor(Color.white);
 			g.drawString("Help", halfW - 50, 100);
 			
 			g.setFont(fnt2);
 			g.drawRect(halfW - 100, 600, 200, 64);
 			g.drawString("Back", halfW - 60, 645);
 			
-			g.setFont(fnt2);
 			g.drawString("Shoot shit", 20 , 300);	
 		}if(game.gameState == STATE.Store){
 			Font fnt = new Font("arial", 1, 50);
-			Font fnt2 = new Font("arial", 1, 30);
+			Font fnt2 = new Font("arial", 1, 20);
 			hud.drawHud(g);
 			
 			//drawing the store
@@ -149,7 +156,7 @@ public class Menu extends MouseAdapter {
 			g.drawString("Heal: 15", Game.WIDTH / 2 - 85, 342);
 			
 			g.drawRect(halfW - 100, 400, 200, 64);
-			g.drawString("Upgrade Base: 200", Game.WIDTH / 2 - 85, 442);
+			g.drawString("Upgrade Base: 1000", Game.WIDTH / 2 - 85, 442);
 			
 			g.drawRect(halfW - 100, 500, 200, 64);
 			g.drawString("Next Wave", Game.WIDTH / 2 - 85, 542);

@@ -53,7 +53,7 @@ public class Explosion extends GameObject{
 	}
 	
 	public static Color boom(){
-		return new Color(119,142,225);
+		return Color.orange;
 	}
 
 }

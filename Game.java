@@ -5,14 +5,14 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-//import java.util.Random;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 public class Game extends Canvas implements Runnable {
 
 	private static final long serialVersionUID = 1L;
 	
 	public static final int WIDTH = 960, HEIGHT = WIDTH / 12 * 9; 
-	//TODO: Late game, have everything scaled
 	
 	private Thread thread;
 	private boolean running = false;
@@ -25,7 +25,6 @@ public class Game extends Canvas implements Runnable {
 		
 	public STATE gameState = STATE.Menu; 
 	
-	//TODO: Create the player here? probably not, you shit
 	public Game(){
 		new Window(WIDTH, HEIGHT, "Marshmellow", this);
 		handler = new Handler(); // add objects under this	
@@ -36,8 +35,8 @@ public class Game extends Canvas implements Runnable {
 		
 		this.addKeyListener(new KeyInput(handler)); // just used for esc
 		
-		if(gameState == STATE.Menu){
-			this.addMouseListener(menu);			
+		if(gameState != STATE.Game){
+			this.addMouseListener(menu);
 		}
 		this.addMouseListener(gun);
 	}
@@ -110,8 +109,7 @@ public class Game extends Canvas implements Runnable {
 			return;
 		}
 		Graphics g = bs.getDrawGraphics();
-		g.setColor(Color.black);
-		g.fillRect(0, 0, WIDTH, HEIGHT);
+		drawBackground(g); //TODO: fix it up? Background Images
 		handler.render(g);
 		if(gameState == STATE.Game){
 			hud.render(g);	
@@ -136,4 +134,24 @@ public class Game extends Canvas implements Runnable {
 	public static void main(String args[]){
 		new Game();
 	}
+	
+	public void drawBackground(Graphics g){
+		try{
+			BufferedImage img = ImageIO.read(getClass().getResourceAsStream("models"
+					+ "/none.png"));			
+			g.drawImage(img, 0, 0, WIDTH, HEIGHT, null);
+		}catch(Exception e){
+			g.setColor(Color.black);
+			g.fillRect(0, 0, WIDTH, HEIGHT);	
+		}
+	}
+//	public static BufferedImage convert(BufferedImage image){
+//		BufferedImage newImage = new BufferedImage(
+//		        image.getWidth(), image.getHeight(),
+//		        BufferedImage.TYPE_INT_ARGB);
+//		    Graphics2D g = newImage.createGraphics();
+//		    g.drawImage(image, 0, 0, null);
+//		    g.dispose();
+//		    return newImage;
+//	}
 }

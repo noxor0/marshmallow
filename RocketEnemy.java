@@ -20,8 +20,8 @@ public class RocketEnemy extends GameObject {
 		super(x, y, id);
 		this.handler = handler;
 		
-		velX = ((oriX - (float)x) / 400);
-		velY = ((oriY - (float)y) / 400);
+		velX = ((oriX - (float)x) / 425);
+		velY = ((oriY - (float)y) / 425);
 	}
 
 	public void tick(){
@@ -37,7 +37,7 @@ public class RocketEnemy extends GameObject {
 		}
 		if(isStopped){
 			rocketCount++;
-			if(rocketCount >= 200){
+			if(rocketCount >= 250){
 				rocketCount = 0;
 				handler.addObject(new Rocket((int)this.x+5, (int)this.y+5, ID.Rocket, handler));
 			}

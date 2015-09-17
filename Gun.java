@@ -26,6 +26,7 @@ public class Gun extends MouseAdapter{
 		if(game.gameState == STATE.Game){
 			for(int i = 0; i < handler.objectList.size(); i++){
 				GameObject tempObject = handler.objectList.get(i);
+				//TODO: Can I make this shorter?
 				if(tempObject.id == ID.BasicEnemy){
 					if(mouseOver(mx, my, (int)tempObject.x-5, (int)tempObject.y-5, 30, 30)){
 						tempObject.removeHp(5);
@@ -44,6 +45,17 @@ public class Gun extends MouseAdapter{
 						}
 					}	
 				}
+				if(tempObject.id == ID.FastEnemy){
+					if(mouseOver(mx, my, (int)tempObject.x-5, (int)tempObject.y-5, 30, 30)){
+						tempObject.removeHp(5);
+						handler.addObject(new Explosion(mx, my, ID.Particle, Explosion.boom(), 14, 14, 0.04f, handler));
+						if(tempObject.getHp()<=0){
+							hud.addMoney(10);
+						}
+					}	
+				}
+				
+				
 			}
 		}
 	}
