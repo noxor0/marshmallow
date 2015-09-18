@@ -43,6 +43,10 @@ public class FastEnemy extends GameObject {
 		}
 	}
 	
+<<<<<<< HEAD
+=======
+	
+>>>>>>> b5e2f2c039a5b93fd2cf79f68d95326bee55c9e3
 	public void render(Graphics g){
 		g.setColor(Color.pink);
 		g.fillRect((int)x, (int)y, size, size);		
